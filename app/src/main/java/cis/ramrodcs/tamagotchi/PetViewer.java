@@ -107,23 +107,26 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
                     break;
                 case CENTER:
                     setContentView(R.layout.fragment_menu_viewer);
+                    curState = State.LEFT;
                     break;
                 case RIGHT:
                     setContentView(R.layout.fragment_pet_viewer);
+                    curState = State.CENTER;
                     break;
             }
         } else if (velocityX < -sensitivity) {
             switch (curState) {
                 case LEFT:
                     setContentView(R.layout.fragment_pet_viewer);
+                    curState = State.CENTER;
                     break;
                 case CENTER:
                     setContentView(R.layout.fragment_pet_stat_viewer);
+                    curState = State.RIGHT;
                     break;
                 case RIGHT:
                     break;
             }
-            setContentView(R.layout.fragment_pet_stat_viewer);
         }
         Toast.makeText(this, "" + velocityX, Toast.LENGTH_SHORT).show();
         return false;
