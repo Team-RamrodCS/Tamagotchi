@@ -6,7 +6,7 @@ import cis.ramrodcs.tamagotchi.api.IPet;
 public class Game implements IGame {
 
     IPet pet = null;
-    private static Game instance = new Game();
+    private static IGame instance = new Game();
 
     public Game() {
 

@@ -1,6 +1,7 @@
 package cis.ramrodcs.tamagotchi;
 
 import android.content.Intent;
+import android.os.Vibrator;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -81,17 +82,19 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
     @Override
     public void onLongPress(MotionEvent e) {
 
+        ((Vibrator)getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if(velocityX > 0) {
-            Intent intent = new Intent(this, MenuViewer.class);
-            startActivity(intent);
-        } else if (velocityX < 0) {
-            Intent intent = new Intent(this, PetStatViewer.class);
-            startActivity(intent);
+        int sensitivity = 500;
+        if(velocityX > sensitivity) {
+            setContentView(R.layout.fragment_menu_viewer);
+        } else if (velocityX < -sensitivity) {
+            setContentView(R.layout.fragment_pet_stat_viewer);
         }
+        Toast.makeText(this, "" + velocityX, Toast.LENGTH_SHORT).show();
         return false;
     }
 
