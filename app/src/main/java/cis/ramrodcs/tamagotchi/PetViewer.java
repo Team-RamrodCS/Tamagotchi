@@ -6,6 +6,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.internal.view.menu.MenuView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,10 +22,21 @@ import cis.ramrodcs.tamagotchi.api.IPetViewer;
 public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat mDetector;
+    private PetStatViewer statViewer;
+    private MenuViewer menuViewer;
+    private enum State {
+        RIGHT,
+        LEFT,
+        CENTER;
+    }
+    private State curState = State.CENTER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        statViewer = new PetStatViewer();
+        menuViewer = new MenuViewer();
+
         setContentView(R.layout.activity_pet_viewer);
 
         mDetector = new GestureDetectorCompat(this, this);
@@ -90,8 +102,27 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         int sensitivity = 500;
         if(velocityX > sensitivity) {
-            setContentView(R.layout.fragment_menu_viewer);
+            switch (curState) {
+                case LEFT:
+                    break;
+                case CENTER:
+                    setContentView(R.layout.fragment_menu_viewer);
+                    break;
+                case RIGHT:
+                    setContentView(R.layout.fragment_pet_viewer);
+                    break;
+            }
         } else if (velocityX < -sensitivity) {
+            switch (curState) {
+                case LEFT:
+                    setContentView(R.layout.fragment_pet_viewer);
+                    break;
+                case CENTER:
+                    setContentView(R.layout.fragment_pet_stat_viewer);
+                    break;
+                case RIGHT:
+                    break;
+            }
             setContentView(R.layout.fragment_pet_stat_viewer);
         }
         Toast.makeText(this, "" + velocityX, Toast.LENGTH_SHORT).show();
