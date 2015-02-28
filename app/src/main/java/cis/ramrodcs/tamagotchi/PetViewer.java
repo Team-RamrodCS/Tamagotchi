@@ -21,6 +21,7 @@ import cis.ramrodcs.tamagotchi.api.IPetViewer;
 
 public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDetector.OnGestureListener {
     private GestureDetectorCompat mDetector;
+    private int currentView = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +102,34 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         int sensitivity = 500;
         if(velocityX > sensitivity) {
-            setContentView(R.layout.fragment_menu_viewer);
+            swipeRight();
         } else if (velocityX < -sensitivity) {
-            setContentView(R.layout.fragment_pet_stat_viewer);
+            swipeLeft();
         }
         Toast.makeText(this, "" + velocityX, Toast.LENGTH_SHORT).show();
         return false;
+    }
+
+    private void swipeRight() {
+        if(currentView < 0) {
+            setContentView(R.layout.fragment_pet_viewer);
+        } else if (currentView == 0) {
+            setContentView(R.layout.fragment_pet_stat_viewer);
+        } else {
+            // Already to the right, no further pages.
+        }
+
+    }
+
+    private void swipeLeft() {
+        if(currentView < 0) {
+            // Already to the left, no further pages.
+        } else if (currentView == 0) {
+            setContentView(R.layout.fragment_menu_viewer);
+        } else {
+            setContentView(R.layout.fragment_pet_viewer);
+        }
+
     }
 
     /**
