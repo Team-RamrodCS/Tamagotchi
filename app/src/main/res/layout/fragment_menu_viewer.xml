@@ -1,11 +1,72 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="cis.ramrodcs.tamagotchi.MenuViewer">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/title_activity_menu_viewer" />
 
-</FrameLayout>
+    <!--<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:text="@string/title_activity_menu_viewer"
+            android:id="@+id/textView4" />
+
+        <TextView
+            android:layout_width="211dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/main_about_game"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_below="@+id/textView4"
+            android:layout_alignLeft="@+id/textView2"
+            android:layout_alignStart="@+id/textView2" />
+
+        <TextView
+            android:layout_width="226dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/main_about_team"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            android:layout_above="@+id/main_settings"
+            android:layout_alignLeft="@+id/ratingBar"
+            android:layout_alignStart="@+id/ratingBar"
+            android:layout_marginBottom="49dp" />
+
+        <Button
+            android:layout_width="261dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_settings_button"
+            android:id="@+id/main_settings"
+            android:onClick="openSettings"
+            android:layout_above="@+id/button"
+            android:layout_alignRight="@+id/button"
+            android:layout_alignEnd="@+id/button" />
+
+        <Button
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
+            android:text="@string/main_quit_button"
+            android:id="@+id/button"
+            android:onClick="quitApp"
+            android:layout_above="@+id/ratingBar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="120dp" />
+
+    <!--</LinearLayout>-->
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ratingBar"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
