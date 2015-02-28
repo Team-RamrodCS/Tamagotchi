@@ -15,13 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+import android.animation.Animator;
+import android.graphics.drawable.AnimationDrawable;
+import android.widget.ImageView;
 
 import cis.ramrodcs.tamagotchi.api.IPetViewer;
 
 
 public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDetector.OnGestureListener {
+
     private GestureDetectorCompat mDetector;
-    private int currentView = 0;
+    int currentView = 0;
+    AnimationDrawable rocketAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,18 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
+        }
+    }
+
+
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus)
+        {
+            Toast.makeText(this, "Has focus!", Toast.LENGTH_SHORT).show();
+            /*ImageView rocketImage = (ImageView) findViewById(R.id.rocket_image);
+            rocketImage.setBackgroundResource(R.drawable.rocket_thrust);
+            rocketAnimation = (AnimationDrawable) rocketImage.getBackground();*/
         }
     }
 
@@ -102,9 +119,9 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         int sensitivity = 500;
         if(velocityX > sensitivity) {
-            swipeRight();
+            setContentView(R.layout.fragment_menu_viewer);
         } else if (velocityX < -sensitivity) {
-            swipeLeft();
+            setContentView(R.layout.fragment_pet_stat_viewer);
         }
         Toast.makeText(this, "" + velocityX, Toast.LENGTH_SHORT).show();
         return false;

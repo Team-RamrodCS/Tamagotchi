@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:src="@drawable/ipenguin"
+        android:src="@drawable/penguin1"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -33,5 +33,7 @@
         android:id="@+id/progressBar2"
         android:layout_below="@+id/progressBar"
         android:layout_centerHorizontal="true" />
+
+
 
 </RelativeLayout>
