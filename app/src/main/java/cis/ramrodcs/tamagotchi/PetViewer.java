@@ -14,13 +14,13 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import cis.ramrodcs.tamagotchi.api.IPetViewer;
 
 
 public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDetector.OnGestureListener {
-
     private GestureDetectorCompat mDetector;
     private PetStatViewer statViewer;
     private MenuViewer menuViewer;
