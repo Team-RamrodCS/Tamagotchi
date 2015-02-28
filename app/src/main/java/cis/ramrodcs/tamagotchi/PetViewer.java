@@ -19,10 +19,7 @@ import android.animation.Animator;
 import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
 
-import cis.ramrodcs.tamagotchi.api.IPetViewer;
-
-
-public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDetector.OnGestureListener {
+public class PetViewer extends ActionBarActivity implements GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat mDetector;
     int currentView = 0;
@@ -119,11 +116,10 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         int sensitivity = 500;
         if(velocityX > sensitivity) {
-            setContentView(R.layout.fragment_menu_viewer);
+            swipeLeft();
         } else if (velocityX < -sensitivity) {
-            setContentView(R.layout.fragment_pet_stat_viewer);
+            swipeRight();
         }
-        Toast.makeText(this, "" + velocityX, Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -134,18 +130,22 @@ public class PetViewer extends ActionBarActivity implements IPetViewer,GestureDe
             setContentView(R.layout.fragment_pet_stat_viewer);
         } else {
             // Already to the right, no further pages.
+            return;
         }
+        ++currentView;
 
     }
 
     private void swipeLeft() {
         if(currentView < 0) {
             // Already to the left, no further pages.
+            return;
         } else if (currentView == 0) {
             setContentView(R.layout.fragment_menu_viewer);
         } else {
             setContentView(R.layout.fragment_pet_viewer);
         }
+        --currentView;
 
     }
 

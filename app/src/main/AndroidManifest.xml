@@ -16,16 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".PetStatViewer"
-            android:label="@string/title_activity_pet_stat_viewer"
-            android:parentActivityName="cis.ramrodcs.tamagotchi.PetViewer" >
-        </activity>
-        <activity
-            android:name=".MenuViewer"
-            android:label="@string/title_activity_menu_viewer"
-            android:parentActivityName="cis.ramrodcs.tamagotchi.PetViewer" >
-        </activity>
     </application>
 
 </manifest>
