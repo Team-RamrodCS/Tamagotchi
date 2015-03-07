@@ -3,9 +3,9 @@
 
     <animation-list
         android:oneshot="true">
-        <item android:drawable="@drawable/penguin1" android:duration="2000" />
-        <item android:drawable="@drawable/penguin2" android:duration="2000" />
-        <item android:drawable="@drawable/penguin3" android:duration="2000" />
+        <item android:drawable="@drawable/ic_launcher" android:duration="2000" />
+        <item android:drawable="@drawable/ic_launcher" android:duration="2000" />
+        <item android:drawable="@drawable/ic_launcher" android:duration="2000" />
     </animation-list>
 
 </selector>

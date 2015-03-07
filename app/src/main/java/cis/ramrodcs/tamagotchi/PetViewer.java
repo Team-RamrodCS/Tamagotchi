@@ -1,6 +1,7 @@
 package cis.ramrodcs.tamagotchi;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.os.Vibrator;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -14,16 +15,28 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.animation.Animator;
 import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class PetViewer extends ActionBarActivity implements GestureDetector.OnGestureListener {
 
     private GestureDetectorCompat mDetector;
     int currentView = 0;
     AnimationDrawable rocketAnimation;
+
+
+    Timer timer;
+    TimerTask timerTask;
+    static long FIXED_DELAY = 1000;
+    static long PERIOD = 10000;
+
+    ProgressBar mybar = (ProgressBar) findViewById(R.id.progressBar);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +45,49 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
 
         mDetector = new GestureDetectorCompat(this, this);
 
+        // Start Timer
+        startTimer();
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+
     }
 
+    public void startTimer() {
+        // Set a new Timer
+        timer = new Timer();
+
+        // Initialize timerTask
+        initializeTimerTask();
+
+        // Schedule timer; After first FIXED_DELAYms, the task will run every PERIODms
+        timer.schedule(timerTask, FIXED_DELAY, PERIOD);
+    }
+
+    public void initializeTimerTask() {
+        // Show toast for testing
+        int duration = Toast.LENGTH_SHORT;
+        CharSequence seq = "Hello from Timer";
+        final Toast toast = Toast.makeText(this,seq,duration);
+
+        // Set a new TimerTask
+        timerTask = new TimerTask() {
+            public void run() {
+                toast.show();
+                // TODO: Add update function for the timerTask
+                // Game.getInstance().getPet().update();
+
+            }
+        };
+    }
+
+    public ActionBarActivity getPetView() {
+        return this;
+    }
 
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

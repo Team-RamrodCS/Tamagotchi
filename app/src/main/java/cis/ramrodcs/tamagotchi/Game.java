@@ -9,10 +9,9 @@ public class Game implements IGame {
     private static IGame instance = new Game();
 
     public Game() {
-
     }
 
-    public IGame getInstance() {
+    public static IGame getInstance() {
         return instance;
     }
 

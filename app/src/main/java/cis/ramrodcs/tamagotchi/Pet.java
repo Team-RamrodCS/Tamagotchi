@@ -1,6 +1,8 @@
 package cis.ramrodcs.tamagotchi;
 
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cis.ramrodcs.tamagotchi.api.IPet;
 import cis.ramrodcs.tamagotchi.api.Stat;
@@ -10,8 +12,8 @@ import cis.ramrodcs.tamagotchi.api.Stat;
  */
 public class Pet implements IPet {
 
-    Map<Stat, Double> stats;
-    Map<Stat, Double> modifiers;
+    protected Map<Stat, Double> stats;
+    protected Map<Stat, Double> modifiers;
 
     private static Double BASE_STAT = 0.5;
     private static Double BASE_MODIFIER = 1.0;
@@ -29,7 +31,7 @@ public class Pet implements IPet {
     }
 
     // Get the modifier value
-    private double getModifier(Stat s) {
+    public double getModifier(Stat s) {
         return modifiers.get(s);
     }
 
@@ -50,15 +52,12 @@ public class Pet implements IPet {
         return wellness;
     }
 
-    private void update() {
+    public void update() {
         // Update statistics
 
         // For every statistic:
         for (Stat stat: Stat.values()) {
             stats.put(stat, stats.get(stat) - 0.1);
         }
-
-
-
     }
 }
