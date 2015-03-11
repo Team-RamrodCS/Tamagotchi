@@ -5,4 +5,7 @@ public interface IPet {
     public double getModifier(Stat s);
     public double getWellness();
     public void update();
+    public boolean isSleeping();
+    public void modifyStat(Stat stat, double amount);
+    public boolean canModifyStat(Stat stat, double amount);
 }

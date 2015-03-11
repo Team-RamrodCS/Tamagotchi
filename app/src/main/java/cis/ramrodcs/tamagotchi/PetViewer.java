@@ -8,8 +8,11 @@ import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,6 +20,11 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+import android.animation.Animator;
+import android.graphics.drawable.AnimationDrawable;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -24,6 +32,8 @@ import android.widget.Toast;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cis.ramrodcs.tamagotchi.api.Stat;
 
 public class PetViewer extends ActionBarActivity implements GestureDetector.OnGestureListener {
 
@@ -33,7 +43,7 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
     Timer timer;
     TimerTask timerTask;
     static long FIXED_DELAY = 1000;
-    static long PERIOD = 10000;
+    static long PERIOD = 1000;
 
     //ProgressBar mybar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -46,7 +56,6 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
 
         // Start Timer
         startTimer();
-
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -71,16 +80,31 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
     public void initializeTimerTask() {
         // Show toast for testing
         int duration = Toast.LENGTH_SHORT;
-        CharSequence seq = "Hello from Timer";
+        CharSequence seq = "Hunger Bar is null.";
         final Toast toast = Toast.makeText(this,seq,duration);
+
+
+        View view = getLayoutInflater().inflate(R.layout.fragment_pet_stat_viewer, null);
+        PetStatViewer viewer = new PetStatViewer();
 
         // Set a new TimerTask
         timerTask = new TimerTask() {
             public void run() {
-                toast.show();
+                //toast.show();
                 // TODO: Add update function for the timerTask
-                // Game.getInstance().getPet().update();
+                Game.getInstance().getPet().update();
+                ProgressBar pb = (ProgressBar) findViewById(R.id.wellnessBar);
+                //CharSequence cs = new String(Game.getInstance().getPet().getWellness() + "");
+                //toast.setText(cs);
+                //toast.show();
+                if(pb != null) {
+                    pb.setProgress((int) (Game.getInstance().getPet().getWellness() * 100));
+                } else {
+                    //toast.show();
+                }
 
+                //ProgressBar wellness = (ProgressBar) findViewById(R.id.wellnessBar);
+                //wellness.setProgress((int) Game.getInstance().getPet().getWellness());
             }
         };
     }
@@ -302,6 +326,9 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
 
             int percent = randomInt.nextInt(100);
 
+            Game.getInstance().setPet(Game.getInstance().createPet());
+
+            /*
             ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
             Resources res = getResources();
@@ -320,7 +347,9 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
             }
             progressBar.getProgressDrawable().setBounds(bounds);
             progressBar.setProgress(percent);
+            */
         }
     }
+
 
 }

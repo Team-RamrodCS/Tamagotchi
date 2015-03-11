@@ -1,9 +1,7 @@
-package cis.ramrodcs.tamagotchi;
+package cis.ramrodcs.tomagotcha.virtualpenguin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cis.ramrodcs.tamagotchi.api.IPet;
 import cis.ramrodcs.tamagotchi.api.Stat;
@@ -19,9 +17,8 @@ public class Pet implements IPet {
     private static Double BASE_STAT = 0.5;
     private static Double BASE_MODIFIER = 1.0;
 
+    private boolean isSleeping = false;
 
-    public boolean isSleeping() {return false;}
-    public boolean canModifyStat(Stat s, double amt) {return false;}
     public Pet() {
         stats = new HashMap<Stat, Double>();
         modifiers = new HashMap<Stat, Double>();
@@ -62,12 +59,34 @@ public class Pet implements IPet {
         // Update statistics
 
         // For every statistic:
-        for (Stat stat: Stat.values()) {
-            stats.put(stat, stats.get(stat) - 0.1);
+        if(isSleeping()) {
+            modifyStat(Stat.ENERGY, .1);
+            modifyStat(Stat.HYGIENE, -.01);
+            modifyStat(Stat.HUNGER, -.01);
+        } else {
+            modifyStat(Stat.ENERGY, -.05);
+            modifyStat(Stat.HAPPINESS, -.05);
+            modifyStat(Stat.HYGIENE, -.05);
+            modifyStat(Stat.HUNGER, -.05);
+        }
+        if(stats.get(Stat.ENERGY) < .2 && Math.random() > .25) {
+            isSleeping = true;
+        }
+        if(stats.get(Stat.ENERGY) > .8 && Math.random() > .25) {
+            isSleeping = false;
         }
     }
 
     public void modifyStat(Stat stat, double amount) {
         stats.put(stat, Math.min(Math.max(stats.get(stat) + modifiers.get(stat)*amount, 0), 1));
+    }
+
+    public boolean canModifyStat(Stat stat, double amount) {
+        double mod = stats.get(stat) + amount;
+        return mod <=1 && mod >= 0;
+    }
+
+    public boolean isSleeping() {
+        return isSleeping;
     }
 }

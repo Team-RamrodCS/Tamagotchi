@@ -119,7 +119,8 @@
         android:layout_alignTop="@+id/textView5"
         android:layout_centerHorizontal="true"
         android:max="100"
-        android:progress="99"/>
+        android:progress="99"
+        android:indeterminate="false" />
 
     <ProgressBar
         style="@android:style/Widget.ProgressBar.Horizontal"
@@ -131,6 +132,9 @@
         android:max="100"
         android:progress="1"/>
         <!--android:progressDrawable="@drawable/redprogress"/>-->
+        android:progress="1"
+        android:progressDrawable="@drawable/redprogress"
+        android:indeterminate="false" />
 
     <ProgressBar
         style="@android:style/Widget.ProgressBar.Horizontal"
@@ -165,6 +169,32 @@
         android:layout_alignRight="@+id/textView6"
         android:layout_alignEnd="@+id/textView6" />
     <!--android:progressDrawable="@drawable/greenprogressbar"/>-->
+        android:progressDrawable="@drawable/greenprogressbar"
+        android:indeterminate="false" />
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/energyBar"
+        android:max="100"
+        android:progress="50"
+        android:progressDrawable="@drawable/greenprogressbar"
+        android:indeterminate="false"
+        android:layout_below="@+id/textView8"
+        android:layout_alignLeft="@+id/hygieneBar"
+        android:layout_alignStart="@+id/hygieneBar" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:text="Energy:"
+        android:id="@+id/textView9"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

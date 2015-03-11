@@ -1,8 +1,7 @@
-package cis.ramrodcs.tamagotchi;
+package cis.ramrodcs.tomagotcha.virtualpenguin;
 
 import cis.ramrodcs.tamagotchi.api.IGame;
 import cis.ramrodcs.tamagotchi.api.IPet;
-import cis.ramrodcs.tamagotchi.api.Stat;
 
 public class Game implements IGame {
 
