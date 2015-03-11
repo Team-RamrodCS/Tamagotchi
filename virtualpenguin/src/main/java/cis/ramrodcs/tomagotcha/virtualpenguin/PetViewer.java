@@ -24,8 +24,6 @@ public class PetViewer extends ActionBarActivity {
 
     Timer timer;
     TimerTask timerTask;
-    static long FIXED_DELAY = 100;
-    static long PERIOD = 1000;
 
 
     @Override
@@ -66,7 +64,7 @@ public class PetViewer extends ActionBarActivity {
         };
 
         // Schedule timer; After first FIXED_DELAYms, the task will run every PERIODms
-        timer.schedule(timerTask, FIXED_DELAY, PERIOD);
+        timer.schedule(timerTask, 100, Settings.MS_PER_UPDATE);
     }
 
     public void renderBars() {

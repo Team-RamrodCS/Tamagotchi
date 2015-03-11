@@ -13,18 +13,22 @@ public class Pet implements IPet {
 
     protected Map<Stat, Double> stats;
     protected Map<Stat, Double> modifiers;
+    protected Map<Stat, Double> modifyAmt;
 
     private static Double BASE_STAT = 0.5;
     private static Double BASE_MODIFIER = 1.0;
+    private static Double BASE_DIFF_PER_UPDATE = 10000./(24*60*60*1000/Settings.MS_PER_UPDATE);
 
     private boolean isSleeping = false;
 
     public Pet() {
         stats = new HashMap<Stat, Double>();
         modifiers = new HashMap<Stat, Double>();
+        modifyAmt = new HashMap<Stat, Double>();
         for (Stat stat: Stat.values()) {
             stats.put(stat, BASE_STAT);
             modifiers.put(stat, BASE_MODIFIER);
+            modifyAmt.put(stat, BASE_DIFF_PER_UPDATE);
         }
     }
 
@@ -57,6 +61,7 @@ public class Pet implements IPet {
 
     public void update() {
         // Update statistics
+        System.out.println(BASE_DIFF_PER_UPDATE);
 
         // For every statistic:
         if(isSleeping()) {
@@ -78,7 +83,7 @@ public class Pet implements IPet {
     }
 
     public void modifyStat(Stat stat, double amount) {
-        stats.put(stat, Math.min(Math.max(stats.get(stat) + modifiers.get(stat)*amount, 0), 1));
+        stats.put(stat, Math.min(Math.max(stats.get(stat) + modifiers.get(stat)*amount*modifyAmt.get(stat)*10, 0), 1));
     }
 
     public boolean canModifyStat(Stat stat, double amount) {
