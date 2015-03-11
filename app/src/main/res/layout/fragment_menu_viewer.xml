@@ -13,33 +13,60 @@
         android:weightSum="1">-->
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="82dp"
-            android:text="@string/title_activity_menu_viewer"
-            android:id="@+id/textView4" />
-
-        <TextView
-            android:layout_width="211dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/main_about_game"
+            android:text="About VirtualPenguin: "
             android:id="@+id/textView"
             android:layout_gravity="center_horizontal"
-            android:layout_below="@+id/textView4"
+            android:layout_marginTop="75dp"
             android:layout_alignLeft="@+id/textView2"
             android:layout_alignStart="@+id/textView2" />
 
         <TextView
+            android:text="@string/about_text"
+            android:id="@+id/AboutText"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView" />
+
+        <TextView
+            android:text="Developers - \n Elliott Ewing (Manager &amp; Programmer) \n Jeremy Lipps (Programmer) \n Dylan Ruggeroli (Programmer)"
+            android:id="@+id/DevText"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2" />
+
+        <TextView
+            android:text="Operations &amp; Testing -- \n Taylor Oyama (Operations) \n Eric Aranda (QA &amp; Testing)"
+            android:id="@+id/OpsText"
+            android:layout_width="fill_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/DevText" />
+
+        <TextView
             android:layout_width="211dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/main_about_team"
+            android:text="About Team Ramrod: "
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal"
-            android:layout_above="@+id/main_settings"
+            android:layout_below="@+id/AboutText"
             android:layout_alignLeft="@+id/ratingBar"
             android:layout_alignStart="@+id/ratingBar"
-            android:layout_marginBottom="49dp" />
+            android:layout_marginTop="15dp" />
 
         <Button
             android:layout_width="261dp"
@@ -47,7 +74,8 @@
             android:text="@string/main_settings_button"
             android:id="@+id/main_settings"
             android:onClick="openSettings"
-            android:layout_above="@+id/button"
+            android:layout_below="@+id/OpsText"
+            android:layout_marginTop="15dp"
             android:layout_alignRight="@+id/button"
             android:layout_alignEnd="@+id/button" />
 
@@ -57,9 +85,8 @@
             android:text="@string/main_quit_button"
             android:id="@+id/button"
             android:onClick="quitApp"
-            android:layout_above="@+id/ratingBar"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="120dp" />
+            android:layout_below="@+id/main_settings"
+            android:layout_centerHorizontal="true" />
 
     <!--</LinearLayout>-->
 

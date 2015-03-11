@@ -25,6 +25,7 @@
         android:layout_height="63dp"
         android:text="Fun:  "
         android:layout_marginTop="57dp"
+        android:layout_marginLeft="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView5"
@@ -38,6 +39,7 @@
         android:layout_height="63dp"
         android:text="Hygiene:  "
         android:layout_below="@+id/textView7"
+        android:layout_marginLeft="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/textView6"
@@ -51,6 +53,7 @@
         android:layout_height="63dp"
         android:text="Hunger:  "
         android:layout_below="@+id/textView5"
+        android:layout_marginLeft="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/textView7"
@@ -76,6 +79,7 @@
         android:layout_height="63dp"
         android:text="Energetic:  "
         android:id="@+id/textView2"
+        android:layout_marginLeft="10dp"
         android:layout_below="@+id/textView1"
         android:layout_toLeftOf="@+id/textView1"
         android:layout_toStartOf="@+id/textView1"
@@ -87,12 +91,24 @@
         android:layout_height="63dp"
         android:text="Educated:  "
         android:id="@+id/textView3"
+        android:layout_marginLeft="10dp"
         android:layout_below="@+id/textView2"
         android:layout_alignRight="@+id/textView2"
         android:layout_alignEnd="@+id/textView2"
         android:textStyle="bold"
         android:textSize="20sp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Miscellaneous"
+        android:id="@+id/textView9"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:layout_below = "@+id/textView3"
+        android:layout_centerVertical="false"
+        android:layout_centerHorizontal="true" />
 
     <ProgressBar
         style="@android:style/Widget.ProgressBar.Horizontal"

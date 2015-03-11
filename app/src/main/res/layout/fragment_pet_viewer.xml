@@ -7,7 +7,9 @@
     android:background="@drawable/tundra_background"
     tools:context=".PetViewer$PlaceholderFragment">
 
-    <TextView android:text="@string/pet_test" android:layout_width="wrap_content"
+    <TextView android:text="@string/pet_wellness" android:layout_width="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:id="@+id/textView3" />
 

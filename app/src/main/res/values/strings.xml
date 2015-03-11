@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Tamagotchi</string>
+    <string name="app_name">VirtualPenguin</string>
     <string name="hello_world">Hello world!</string>
-    <string name="pet_test">Pet viewer</string>
+    <string name="pet_wellness">Wellness Meter</string>
     <string name="stat_test">Pet stat viewer</string>
     <string name="menu_test">menu viewer</string>
     <string name="action_settings">Settings</string>
@@ -14,5 +14,6 @@
     <string name="main_about_game">About Pet Penguin:\nIt\'s awesome.</string>
     <string name="main_settings_button">Settings</string>
     <string name="main_quit_button">Quit</string>
+    <string name="about_text"> Welcome to VirtualPenguin, our android-based rendition of Bandai\'s handheld Tamagotchi toy. Here, you can create and care for a VirtualPenguin of your very own! Please enjoy.</string>
 
 </resources>
