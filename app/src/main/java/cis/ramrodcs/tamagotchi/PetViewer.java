@@ -3,6 +3,8 @@ package cis.ramrodcs.tamagotchi;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
@@ -110,7 +112,7 @@ public class PetViewer extends ActionBarActivity implements GestureDetector.OnGe
             Toast.makeText(this, "Reached the end!", Toast.LENGTH_SHORT).show();
 
             // Option 2
-            StateListDrawable background = (StateListDrawable) penguinImage.getBackground();
+            StateListDrawable githu = (StateListDrawable) penguinImage.getBackground();
             AnimationDrawable penguinAnimation = (AnimationDrawable) background.getCurrent();
             penguinAnimation.setVisible(true, true);*/
 
