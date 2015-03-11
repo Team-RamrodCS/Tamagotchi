@@ -9,6 +9,7 @@ public class Game implements IGame {
     private static IGame instance = new Game();
 
     public Game() {
+        setPet(createPet());
     }
 
     public static IGame getInstance() {
@@ -17,16 +18,16 @@ public class Game implements IGame {
 
     @Override
     public IPet getPet() {
-        return null;
+        return pet;
     }
 
     @Override
     public void setPet(IPet pet) {
-
+        this.pet = pet;
     }
 
     @Override
     public IPet createPet() {
-        return null;
+        return new Pet();
     }
 }
