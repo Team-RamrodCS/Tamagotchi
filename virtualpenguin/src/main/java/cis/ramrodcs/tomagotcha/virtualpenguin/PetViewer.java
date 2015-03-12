@@ -1,15 +1,15 @@
 package cis.ramrodcs.tomagotcha.virtualpenguin;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -39,6 +39,12 @@ public class PetViewer extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
+        penguinImage.setBackgroundResource(R.drawable.penguin_animation);
+        AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
+        penguinAnimation.start();
+
     }
 
     public void startTimer() {
@@ -100,6 +106,12 @@ public class PetViewer extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        else if (id == R.id.action_quit)
+        {
+            this.finish();
+            System.exit(0);
         }
 
         return super.onOptionsItemSelected(item);
@@ -170,5 +182,13 @@ public class PetViewer extends ActionBarActivity {
         pet.modifyStat(Stat.HAPPINESS, .3);
         pet.modifyStat(Stat.ENERGY, -.1);
         renderBars();
+    }
+
+    public void onWindowFocusChanged(boolean hasFocus)
+    {
+        super.onWindowFocusChanged(hasFocus);
+
+        if(hasFocus)
+            Toast.makeText(this, "Has focus!", Toast.LENGTH_SHORT).show();
     }
 }
