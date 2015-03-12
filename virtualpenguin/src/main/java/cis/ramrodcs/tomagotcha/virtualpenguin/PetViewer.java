@@ -1,5 +1,7 @@
 package cis.ramrodcs.tomagotcha.virtualpenguin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,9 +42,6 @@ public class PetViewer extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
-
-
-
     }
 
     public void startTimer() {
@@ -69,34 +68,30 @@ public class PetViewer extends ActionBarActivity {
                 // If was sleeping
                 if (wasSleeping && !isSleeping)
                 {
-                    runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable()
+                    {
                         @Override
-                        public void run() {
+                        public void run()
+                        {
                             penguinImage.setBackgroundResource(R.drawable.penguin_animation);
                             AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
                             penguinAnimation.start();
-
-//stuff that updates ui
-
                         }
                     });
-
                 }
 
                 else if (!wasSleeping && isSleeping)
                 {
-                    runOnUiThread(new Runnable() {
+                    runOnUiThread(new Runnable()
+                    {
                         @Override
-                        public void run() {
+                        public void run()
+                        {
                             penguinImage.setBackgroundResource(R.drawable.sleep_animation);
                             AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
                             penguinAnimation.start();
-
-//stuff that updates ui
-
                         }
                     });
-
                 }
 
                 if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .5) {
@@ -150,6 +145,20 @@ public class PetViewer extends ActionBarActivity {
         {
             this.finish();
             System.exit(0);
+        }
+
+        else if (id == R.id.action_about)
+        {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            alertDialog.setTitle("About");
+            alertDialog.setMessage("About Team Ramrod:  We are awesome! \nAbout Virtual Penguin:  It is awesome!");
+            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+// here you can add functions
+                }
+            });
+            alertDialog.setIcon(R.drawable.ic_launcher);
+            alertDialog.show();
         }
 
         return super.onOptionsItemSelected(item);
