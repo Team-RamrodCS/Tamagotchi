@@ -40,10 +40,7 @@ public class PetViewer extends ActionBarActivity {
                     .commit();
         }
 
-        ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
-        penguinImage.setBackgroundResource(R.drawable.penguin_animation);
-        AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
-        penguinAnimation.start();
+
 
     }
 
@@ -188,7 +185,12 @@ public class PetViewer extends ActionBarActivity {
     {
         super.onWindowFocusChanged(hasFocus);
 
-        if(hasFocus)
+        if(hasFocus) {
             Toast.makeText(this, "Has focus!", Toast.LENGTH_SHORT).show();
+            ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
+            penguinImage.setBackgroundResource(R.drawable.penguin_animation);
+            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
+            penguinAnimation.start();
+        }
     }
 }
