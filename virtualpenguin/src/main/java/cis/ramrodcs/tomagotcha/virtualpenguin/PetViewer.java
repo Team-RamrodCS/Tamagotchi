@@ -54,12 +54,15 @@ public class PetViewer extends ActionBarActivity {
         CharSequence seq = "Your pet has died. You are a terrible owner.";
         final Toast toast = Toast.makeText(this,seq,duration);
         final MediaPlayer deathSound = MediaPlayer.create(this, R.raw.wahwah);
+        final MediaPlayer bgMusic = MediaPlayer.create(this, R.raw.bgmusic);
 
         // Set a new TimerTask
         timerTask = new TimerTask() {
             public void run() {
                 // TODO: Add update function for the timerTask
                 boolean wasSleeping = Game.getInstance().getPet().isSleeping();
+
+                bgMusic.start();
 
                 Game.getInstance().getPet().update();
 
@@ -152,16 +155,28 @@ public class PetViewer extends ActionBarActivity {
 
         else if (id == R.id.action_about)
         {
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+            /*AlertDialog alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle("About");
             alertDialog.setMessage("About Team Ramrod:  We are awesome! \nAbout Virtual Penguin:  It is awesome!");
             alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-// here you can add functions
                 }
             });
             alertDialog.setIcon(R.drawable.ic_launcher);
-            alertDialog.show();
+            alertDialog.show();*/
+
+            new AlertDialog.Builder(this)
+                    .setTitle("ABOUT")
+                    .setMessage("About Team Ramrod:  We are awesome! \nAbout Virtual Penguin:  It is awesome!")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            // continue with delete
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+
         }
 
         return super.onOptionsItemSelected(item);
