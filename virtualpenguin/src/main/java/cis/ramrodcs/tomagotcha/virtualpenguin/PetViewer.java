@@ -26,6 +26,7 @@ public class PetViewer extends ActionBarActivity {
     TimerTask timerTask;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,47 @@ public class PetViewer extends ActionBarActivity {
         timerTask = new TimerTask() {
             public void run() {
                 // TODO: Add update function for the timerTask
+                boolean wasSleeping = Game.getInstance().getPet().isSleeping();
+
                 Game.getInstance().getPet().update();
+
+                boolean isSleeping = Game.getInstance().getPet().isSleeping();
+
+                final ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
+
+                // If was sleeping
+                if (wasSleeping && !isSleeping)
+                {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            penguinImage.setBackgroundResource(R.drawable.penguin_animation);
+                            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
+                            penguinAnimation.start();
+
+//stuff that updates ui
+
+                        }
+                    });
+
+                }
+
+                else if (!wasSleeping && isSleeping)
+                {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            penguinImage.setBackgroundResource(R.drawable.sleep_animation);
+                            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
+                            penguinAnimation.start();
+
+//stuff that updates ui
+
+                        }
+                    });
+
+                }
+
                 if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .5) {
                     toast.show();
                     Game.getInstance().setPet(Game.getInstance().createPet());
