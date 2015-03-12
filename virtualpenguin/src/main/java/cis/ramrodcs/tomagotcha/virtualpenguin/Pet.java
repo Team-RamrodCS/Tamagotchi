@@ -1,10 +1,12 @@
 package cis.ramrodcs.tomagotcha.virtualpenguin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import cis.ramrodcs.tamagotchi.api.IPet;
 import cis.ramrodcs.tamagotchi.api.Stat;
+import cis.ramrodcs.tamagotchi.api.Trait;
 
 /**
  * Created by Dylan on 2/24/2015.
@@ -13,22 +15,34 @@ public class Pet implements IPet {
 
     protected Map<Stat, Double> stats;
     protected Map<Stat, Double> modifiers;
-    protected Map<Stat, Double> modifyAmt;
+    protected ArrayList<Trait> traits;
 
-    private static Double BASE_STAT = 0.5;
+    private static Double BASE_STAT = 0.9;
     private static Double BASE_MODIFIER = 1.0;
-    private static Double BASE_DIFF_PER_UPDATE = 10000./(24*60*60*1000/Settings.MS_PER_UPDATE);
 
     private boolean isSleeping = false;
 
     public Pet() {
         stats = new HashMap<Stat, Double>();
         modifiers = new HashMap<Stat, Double>();
-        modifyAmt = new HashMap<Stat, Double>();
+        traits = new ArrayList<Trait>();
+        for(Trait trait : Trait.values()) {
+            if(Math.random() >= 0.65) {
+                traits.add(trait);
+            }
+        }
         for (Stat stat: Stat.values()) {
             stats.put(stat, BASE_STAT);
-            modifiers.put(stat, BASE_MODIFIER);
-            modifyAmt.put(stat, BASE_DIFF_PER_UPDATE);
+            double mod = BASE_MODIFIER;
+            for(Trait t : traits) {
+                if(t.getStat() == stat) {
+                    mod *= t.getModifier();
+                }
+            }
+            modifiers.put(stat, mod);
+        }
+        for(Trait trait : traits) {
+            System.out.println(trait.toString());
         }
     }
 
@@ -61,34 +75,44 @@ public class Pet implements IPet {
 
     public void update() {
         // Update statistics
-        System.out.println(BASE_DIFF_PER_UPDATE);
-
         // For every statistic:
         if(isSleeping()) {
-            modifyStat(Stat.ENERGY, .1);
-            modifyStat(Stat.HYGIENE, -.01);
-            modifyStat(Stat.HUNGER, -.01);
+            modifyStat(Stat.ENERGY, 1);
+            modifyStat(Stat.HYGIENE, -.5);
+            modifyStat(Stat.HUNGER, -.4);
         } else {
-            modifyStat(Stat.ENERGY, -.05);
-            modifyStat(Stat.HAPPINESS, -.05);
-            modifyStat(Stat.HYGIENE, -.05);
-            modifyStat(Stat.HUNGER, -.05);
+            modifyStat(Stat.ENERGY, -.5);
+            modifyStat(Stat.HAPPINESS, -.5);
+            modifyStat(Stat.HYGIENE, -.4);
+            modifyStat(Stat.HUNGER, -.5);
         }
-        if(stats.get(Stat.ENERGY) < .2 && Math.random() > .25) {
+        if(stats.get(Stat.ENERGY) < .2 && Math.random() > .75) {
             isSleeping = true;
         }
-        if(stats.get(Stat.ENERGY) > .8 && Math.random() > .25) {
+        if(stats.get(Stat.ENERGY) > .8 && Math.random() > .75) {
             isSleeping = false;
         }
     }
 
     public void modifyStat(Stat stat, double amount) {
-        stats.put(stat, Math.min(Math.max(stats.get(stat) + modifiers.get(stat)*amount*modifyAmt.get(stat)*10, 0), 1));
+        double newValue = getModifiedAmount(stat, amount);
+        stats.put(stat, Math.min(Math.max(newValue, 0), 1));
     }
 
     public boolean canModifyStat(Stat stat, double amount) {
-        double mod = stats.get(stat) + amount;
-        return mod <=1 && mod >= 0;
+        double delta = getModifiedAmount(stat, amount);
+        return delta <=1 && delta >= 0;
+    }
+
+    private double getModifiedAmount(Stat stat, double amount) {
+        double delta = amount;
+        for(Trait t : traits) {
+            if(stat == t.getStat()) {
+                delta += t.getAdditive();
+            }
+        }
+        double mod = (modifiers.get(stat) * delta/100.)  + stats.get(stat);
+        return mod;
     }
 
     public boolean isSleeping() {

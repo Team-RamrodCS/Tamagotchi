@@ -7,8 +7,8 @@ public enum Stat {
     HUNGER("Hunger"),
     HAPPINESS("Happiness"),
     HYGIENE("Hygiene"),
-    ENERGY("Energy"),
-    GROWTH("Growth");
+    ENERGY("Energy");
+    //GROWTH("Growth");
 
     String name = "";
 
