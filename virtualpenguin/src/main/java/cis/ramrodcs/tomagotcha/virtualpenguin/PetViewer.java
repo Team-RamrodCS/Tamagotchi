@@ -63,7 +63,7 @@ public class PetViewer extends ActionBarActivity {
                 // TODO: Add update function for the timerTask
                 boolean wasSleeping = Game.getInstance().getPet().isSleeping();
 
-                bgMusic.start();
+                //bgMusic.start();
 
                 Game.getInstance().getPet().update();
 
@@ -102,7 +102,7 @@ public class PetViewer extends ActionBarActivity {
 
                 if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .1) {
                     toast.show();
-                    bgMusic.stop();
+                    //bgMusic.stop();
                     deathSound.start();
                     Game.getInstance().setPet(Game.getInstance().createPet());
                 }
