@@ -1,8 +1,6 @@
 package cis.ramrodcs.tomagotcha.virtualpenguin;
 
 import android.app.DialogFragment;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -57,12 +55,15 @@ public class PetViewer extends ActionBarActivity {
         CharSequence seq = "Your pet has died. You are a terrible owner.";
         final Toast toast = Toast.makeText(this,seq,duration);
         final MediaPlayer deathSound = MediaPlayer.create(this, R.raw.wahwah);
+        final MediaPlayer bgMusic = MediaPlayer.create(this, R.raw.bgmusic);
 
         // Set a new TimerTask
         timerTask = new TimerTask() {
             public void run() {
                 // TODO: Add update function for the timerTask
                 boolean wasSleeping = Game.getInstance().getPet().isSleeping();
+
+                bgMusic.start();
 
                 Game.getInstance().getPet().update();
 
@@ -101,6 +102,7 @@ public class PetViewer extends ActionBarActivity {
 
                 if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .1) {
                     toast.show();
+                    bgMusic.stop();
                     deathSound.start();
                     Game.getInstance().setPet(Game.getInstance().createPet());
                 }
