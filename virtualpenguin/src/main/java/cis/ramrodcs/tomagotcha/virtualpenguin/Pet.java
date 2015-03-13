@@ -17,6 +17,10 @@ public class Pet implements IPet {
     protected Map<Stat, Double> modifiers;
     protected ArrayList<Trait> traits;
 
+    private int playTimeOut = 0;
+    private int feedTimeOut = 0;
+    private int cleanTimeOut = 0;
+
     private static Double BASE_STAT = 0.9;
     private static Double BASE_MODIFIER = 1.0;
 
@@ -92,6 +96,10 @@ public class Pet implements IPet {
         if(stats.get(Stat.ENERGY) > .8 && Math.random() > .75) {
             isSleeping = false;
         }
+
+        playTimeOut = Math.max(--playTimeOut, 0);
+        feedTimeOut = Math.max(--feedTimeOut, 0);
+        cleanTimeOut = Math.max(--cleanTimeOut, 0);
     }
 
     public void modifyStat(Stat stat, double amount) {
@@ -113,6 +121,30 @@ public class Pet implements IPet {
         }
         double mod = (modifiers.get(stat) * delta/100.)  + stats.get(stat);
         return mod;
+    }
+
+    public void setPlayTimeOut(int to) {
+        playTimeOut = to;
+    }
+
+    public void setFeedTimeOut(int to) {
+        feedTimeOut = to;
+    }
+
+    public void setCleanTimeOut(int to) {
+        cleanTimeOut = to;
+    }
+
+    public boolean canPlay() {
+        return playTimeOut == 0;
+    }
+
+    public boolean canFeed() {
+        return feedTimeOut == 0;
+    }
+
+    public boolean canClean() {
+        return cleanTimeOut == 0;
     }
 
     public boolean isSleeping() {

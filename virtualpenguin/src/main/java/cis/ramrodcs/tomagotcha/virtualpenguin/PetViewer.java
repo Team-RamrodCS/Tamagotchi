@@ -56,14 +56,52 @@ public class PetViewer extends ActionBarActivity {
         int duration = Toast.LENGTH_SHORT;
         CharSequence seq = "Your pet has died. You are a terrible owner.";
         final Toast toast = Toast.makeText(this,seq,duration);
+        final MediaPlayer deathSound = MediaPlayer.create(this, R.raw.wahwah);
 
         // Set a new TimerTask
         timerTask = new TimerTask() {
             public void run() {
                 // TODO: Add update function for the timerTask
+                boolean wasSleeping = Game.getInstance().getPet().isSleeping();
+
                 Game.getInstance().getPet().update();
-                if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .5) {
+
+                boolean isSleeping = Game.getInstance().getPet().isSleeping();
+
+                final ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
+
+                // If was sleeping
+                if (wasSleeping && !isSleeping)
+                {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            penguinImage.setBackgroundResource(R.drawable.penguin_animation);
+                            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
+                            penguinAnimation.start();
+                        }
+                    });
+                }
+
+                else if (!wasSleeping && isSleeping)
+                {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            penguinImage.setBackgroundResource(R.drawable.sleep_animation);
+                            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
+                            penguinAnimation.start();
+                        }
+                    });
+                }
+
+                if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .1) {
                     toast.show();
+                    deathSound.start();
                     Game.getInstance().setPet(Game.getInstance().createPet());
                 }
                 renderBars();
@@ -122,6 +160,10 @@ public class PetViewer extends ActionBarActivity {
             System.exit(0);
         }
 
+        else if (id == R.id.restart_pet) {
+            Game.getInstance().setPet(Game.getInstance().createPet());
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -146,16 +188,17 @@ public class PetViewer extends ActionBarActivity {
             Toast.makeText(this, "Shhh... Your pet is sleeping!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.HUNGER, .2)) {
+        if(!pet.canFeed()) {
+            Toast.makeText(this, "You just fed your pet, wait a while!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!pet.canModifyStat(Stat.HUNGER, 20)) {
             Toast.makeText(this, "Your pet is not hungry!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.ENERGY, -.05)) {
-            Toast.makeText(this, "Your pet is too tired to eat!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        pet.modifyStat(Stat.HUNGER, .2);
-        pet.modifyStat(Stat.ENERGY, -.05);
+        pet.modifyStat(Stat.HUNGER, 20);
+        pet.modifyStat(Stat.ENERGY, 5);
+        pet.setFeedTimeOut(10);
         renderBars();
     }
     public void clean(View view) {
@@ -164,11 +207,16 @@ public class PetViewer extends ActionBarActivity {
             Toast.makeText(this, "Shhh... Your pet is sleeping!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.HYGIENE, .3)) {
+        if(!pet.canClean()) {
+            Toast.makeText(this, "You just cleaned your pet, wait a while!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!pet.canModifyStat(Stat.HYGIENE, 30)) {
             Toast.makeText(this, "Your pet is not dirty!", Toast.LENGTH_SHORT).show();
             return;
         }
-        pet.modifyStat(Stat.HYGIENE, .3);
+        pet.modifyStat(Stat.HYGIENE, 20);
+        pet.setCleanTimeOut(10);
         renderBars();
     }
     public void play(View view) {
@@ -177,18 +225,19 @@ public class PetViewer extends ActionBarActivity {
             Toast.makeText(this, "Shhh... Your pet is sleeping!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.HUNGER, -.1)) {
+        if(!pet.canModifyStat(Stat.HUNGER, -5)) {
             Toast.makeText(this, "Your pet is too hungry to play!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.ENERGY, -.1)) {
+        if(!pet.canModifyStat(Stat.ENERGY, -10)) {
             Toast.makeText(this, "Your pet is too tired to play!", Toast.LENGTH_SHORT).show();
             return;
         }
-        pet.modifyStat(Stat.HUNGER, -.1);
-        pet.modifyStat(Stat.HYGIENE, -.1);
-        pet.modifyStat(Stat.HAPPINESS, .3);
-        pet.modifyStat(Stat.ENERGY, -.1);
+        pet.modifyStat(Stat.HUNGER, -5);
+        pet.modifyStat(Stat.HYGIENE, -5);
+        pet.modifyStat(Stat.HAPPINESS, 10);
+        pet.modifyStat(Stat.ENERGY, -10);
+        pet.setPlayTimeOut(10);
         renderBars();
     }
 
@@ -197,7 +246,6 @@ public class PetViewer extends ActionBarActivity {
         super.onWindowFocusChanged(hasFocus);
 
         if(hasFocus) {
-            Toast.makeText(this, "Has focus!", Toast.LENGTH_SHORT).show();
             ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
             penguinImage.setBackgroundResource(R.drawable.penguin_animation);
             AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
