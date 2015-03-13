@@ -4,7 +4,9 @@
 
     <item android:id="@+id/action_about" android:title="@string/action_about"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    <item android:id="@+id/penguin_info" android:title="@string/penguin_info"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/ramrod_info" android:title="@string/ramrod_info"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_quit" android:title="@string/action_quit"
         android:orderInCategory="100" app:showAsAction="never" />

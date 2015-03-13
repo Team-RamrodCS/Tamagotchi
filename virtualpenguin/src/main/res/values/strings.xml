@@ -5,6 +5,11 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_quit">Quit</string>
+    <string name="penguin_info_str">Test string for Virtual Penguin information</string>
+    <string name="penguin_info">About Virtual Penguin</string>
+    <string name="ramrod_info_str"> <b>Developers</b> -- \n &#160;&#160; Elliott Ewing (<i>Manager/Programmer</i>) \n &#160;&#160; Jeremy Lipps (<i>Programmer</i>) \n &#160;&#160; Dylan Ruggeroli (<i>Programmer</i>) \n <b>Operations &amp; Testing</b> \n &#160;&#160; Taylor Oyama (<i>Documentation/Art</i>) \n &#160;&#160; Eric Aranda (<i>Tester</i>)</string>
+    <string name="ramrod_info">About Team Ramrod</string>
+    <string name="done">Done</string>
     <string name="action_about">About</string>
 
 </resources>

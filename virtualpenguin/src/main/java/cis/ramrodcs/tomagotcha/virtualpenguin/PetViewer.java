@@ -1,5 +1,6 @@
 package cis.ramrodcs.tomagotcha.virtualpenguin;
 
+import android.app.DialogFragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
@@ -29,7 +30,6 @@ public class PetViewer extends ActionBarActivity {
     TimerTask timerTask;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +43,9 @@ public class PetViewer extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+
+
     }
 
     public void startTimer() {
@@ -53,55 +56,14 @@ public class PetViewer extends ActionBarActivity {
         int duration = Toast.LENGTH_SHORT;
         CharSequence seq = "Your pet has died. You are a terrible owner.";
         final Toast toast = Toast.makeText(this,seq,duration);
-        final MediaPlayer deathSound = MediaPlayer.create(this, R.raw.wahwah);
-        final MediaPlayer bgMusic = MediaPlayer.create(this, R.raw.bgmusic);
 
         // Set a new TimerTask
         timerTask = new TimerTask() {
             public void run() {
                 // TODO: Add update function for the timerTask
-                boolean wasSleeping = Game.getInstance().getPet().isSleeping();
-
-                bgMusic.start();
-
                 Game.getInstance().getPet().update();
-
-                boolean isSleeping = Game.getInstance().getPet().isSleeping();
-
-                final ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
-
-                // If was sleeping
-                if (wasSleeping && !isSleeping)
-                {
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            penguinImage.setBackgroundResource(R.drawable.penguin_animation);
-                            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
-                            penguinAnimation.start();
-                        }
-                    });
-                }
-
-                else if (!wasSleeping && isSleeping)
-                {
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            penguinImage.setBackgroundResource(R.drawable.sleep_animation);
-                            AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
-                            penguinAnimation.start();
-                        }
-                    });
-                }
-
-                if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .1) {
+                if(Game.getInstance().getPet().getWellness() <= .15 && Math.random() > .5) {
                     toast.show();
-                    deathSound.start();
                     Game.getInstance().setPet(Game.getInstance().createPet());
                 }
                 renderBars();
@@ -143,40 +105,21 @@ public class PetViewer extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.penguin_info) {
+            DialogFragment d = new SettingsDialog();
+            d.show(getFragmentManager(), "penguin info");
             return true;
         }
 
+        else if (id == R.id.ramrod_info) {
+            DialogFragment d = new RamrodDialog();
+            d.show(getFragmentManager(), "ramrod info");
+            return true;
+        }
         else if (id == R.id.action_quit)
         {
             this.finish();
             System.exit(0);
-        }
-
-        else if (id == R.id.action_about)
-        {
-            /*AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("About");
-            alertDialog.setMessage("About Team Ramrod:  We are awesome! \nAbout Virtual Penguin:  It is awesome!");
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                }
-            });
-            alertDialog.setIcon(R.drawable.ic_launcher);
-            alertDialog.show();*/
-
-            new AlertDialog.Builder(this)
-                    .setTitle("ABOUT")
-                    .setMessage("About Team Ramrod:  We are awesome! \nAbout Virtual Penguin:  It is awesome!")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            // continue with delete
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert)
-                    .show();
-
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -203,12 +146,16 @@ public class PetViewer extends ActionBarActivity {
             Toast.makeText(this, "Shhh... Your pet is sleeping!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.HUNGER, 20)) {
+        if(!pet.canModifyStat(Stat.HUNGER, .2)) {
             Toast.makeText(this, "Your pet is not hungry!", Toast.LENGTH_SHORT).show();
             return;
         }
-        pet.modifyStat(Stat.HUNGER, 20);
-        pet.modifyStat(Stat.ENERGY, 5);
+        if(!pet.canModifyStat(Stat.ENERGY, -.05)) {
+            Toast.makeText(this, "Your pet is too tired to eat!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        pet.modifyStat(Stat.HUNGER, .2);
+        pet.modifyStat(Stat.ENERGY, -.05);
         renderBars();
     }
     public void clean(View view) {
@@ -217,11 +164,11 @@ public class PetViewer extends ActionBarActivity {
             Toast.makeText(this, "Shhh... Your pet is sleeping!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.HYGIENE, 30)) {
+        if(!pet.canModifyStat(Stat.HYGIENE, .3)) {
             Toast.makeText(this, "Your pet is not dirty!", Toast.LENGTH_SHORT).show();
             return;
         }
-        pet.modifyStat(Stat.HYGIENE, 30);
+        pet.modifyStat(Stat.HYGIENE, .3);
         renderBars();
     }
     public void play(View view) {
@@ -230,18 +177,18 @@ public class PetViewer extends ActionBarActivity {
             Toast.makeText(this, "Shhh... Your pet is sleeping!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.HUNGER, -5)) {
+        if(!pet.canModifyStat(Stat.HUNGER, -.1)) {
             Toast.makeText(this, "Your pet is too hungry to play!", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(!pet.canModifyStat(Stat.ENERGY, -10)) {
+        if(!pet.canModifyStat(Stat.ENERGY, -.1)) {
             Toast.makeText(this, "Your pet is too tired to play!", Toast.LENGTH_SHORT).show();
             return;
         }
-        pet.modifyStat(Stat.HUNGER, -5);
-        pet.modifyStat(Stat.HYGIENE, -5);
-        pet.modifyStat(Stat.HAPPINESS, 10);
-        pet.modifyStat(Stat.ENERGY, -10);
+        pet.modifyStat(Stat.HUNGER, -.1);
+        pet.modifyStat(Stat.HYGIENE, -.1);
+        pet.modifyStat(Stat.HAPPINESS, .3);
+        pet.modifyStat(Stat.ENERGY, -.1);
         renderBars();
     }
 
@@ -250,6 +197,7 @@ public class PetViewer extends ActionBarActivity {
         super.onWindowFocusChanged(hasFocus);
 
         if(hasFocus) {
+            Toast.makeText(this, "Has focus!", Toast.LENGTH_SHORT).show();
             ImageView penguinImage = (ImageView) findViewById(R.id.imageView);
             penguinImage.setBackgroundResource(R.drawable.penguin_animation);
             AnimationDrawable penguinAnimation = (AnimationDrawable) penguinImage.getBackground();
